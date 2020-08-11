@@ -1,0 +1,7 @@
+form(action="/todos/search", method="GET")
+  input(type="text", name="q")
+  button Search
+ul
+  each val in todosList
+    li= val.name
+a(href="/todos/create") Add new task
