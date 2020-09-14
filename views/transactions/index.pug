@@ -1,0 +1,45 @@
+extends ../layout
+
+block content
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.navbar-brand(href='/transactions') Transactions
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(href='/transactions/create') Create Transaction 
+                li.nav-item
+                    a.nav-link(href='/books') Back 
+    br
+    .container
+        form(action='/transactions/search', method='get')
+            input(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search transaction')
+            input(type='submit', value='Submit')
+        br
+        table.table.table-bordered(style='width:100%')
+            tr
+                th ID Transaction
+                th(colspan='2') User
+                th(colspan='2') Book
+                th Status
+                th 
+            each transaction in transactions
+                tr
+                    td(rowspan='2')= transaction.id
+                    th Id User
+                    td= transaction.user.id
+                    th Id Book
+                    td= transaction.book.id
+                    td(rowspan='2')= transaction.isComplete
+                    td(rowspan='2')
+                        if transaction.isComplete
+                            button(disabled) Complete
+                        else
+                            form(action='/transactions/' + transaction.id + '/complete', method='get')
+                                button(type='submit') Complete
+                tr
+                    th Name User
+                    td= transaction.user.name
+                    th Name Book
+                    td= transaction.book.name
