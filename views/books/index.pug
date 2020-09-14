@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='/books') Home
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarNav.collapse.navbar-collapse
+        ul.navbar-nav
+          li.nav-item.active
+            a.nav-link(href='/users') Users
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/transactions') Transactions
+          li.nav-item
+            a.nav-link(href='/') Back 
+    br
+    .container
+        form(action='/books/search', method='get')
+            input(type='text', name='name', value=value ? value : '', placeholder='Search book')
+            input(type='submit', value='Submit')
+        br
+        a(href='/books/create') New Book
+        br
+        ul 
+            each book in books
+                li= book.name
+                    span &nbsp; &nbsp;
+                        a(href='/books/' + book.id) View
+                    span &nbsp; &nbsp;
+                        a(href='/books/' + book.id + '/delete') Delete

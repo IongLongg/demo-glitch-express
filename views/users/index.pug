@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+    a(href='/books') Back
+    br
+    a(href='/users/create') New User
+    br
+    br
+    form(action='/users/search', method='get')
+        input(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search user')
+        input(type='submit', value='Submit')
+    ul 
+        each user in users
+            li= user.name
+                span &nbsp; &nbsp;
+                    a(href='/users/' + user.id) View
+                span &nbsp; &nbsp;
+                    a(href='/users/' + user.id + '/delete') Delete
+                span &nbsp; &nbsp;
+                    a(href='/users/' + user.id + '/edit') Edit

@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        .navbar-brand Create Transaction
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(href='/transactions') Back 
+    .container
+        br
+        form(action='/transactions/create', method='post')
+            label Users
+            span &nbsp
+            select(name='user')
+                each user in users
+                    option(value= user.id + '|' + user.name)= user.name
+                    label User 
+            span &nbsp &nbsp &nbsp &nbsp
+            label Books
+            span &nbsp
+            select(name='book')
+                each book in books
+                    option(value= book.id + '|' + book.name)= book.name
+            span &nbsp
+            input(type='submit')
