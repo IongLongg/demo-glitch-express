@@ -1,13 +1,14 @@
 var express = require('express')
 
 var controllerUsers = require('../controllers/users')
+var middlewareUsers = require('../middlewares/users-validator')
 
 var router = express.Router()
 
 router.get('/', controllerUsers.index)
 
 router.get('/create', controllerUsers.getCreate)
-router.post('/create', controllerUsers.postCreate)
+router.post('/create', middlewareUsers.postCreate ,controllerUsers.postCreate)
 
 router.get('/search?', controllerUsers.search)
 

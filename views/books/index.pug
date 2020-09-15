@@ -16,16 +16,24 @@ block content
             a.nav-link(href='/') Back 
     br
     .container
-        form(action='/books/search', method='get')
-            input(type='text', name='name', value=value ? value : '', placeholder='Search book')
-            input(type='submit', value='Submit')
+        form.form-inline(action='/books/search', method='get')
+            input.form-control.mr-2(type='text', name='name', value=value ? value : '', placeholder='Search book')
+            input.btn.btn-outline-primary(type='submit', value='Search')
         br
-        a(href='/books/create') New Book
+        a.btn.btn-primary(href='/books/create') New Book
         br
-        ul 
-            each book in books
-                li= book.name
-                    span &nbsp; &nbsp;
-                        a(href='/books/' + book.id) View
-                    span &nbsp; &nbsp;
-                        a(href='/books/' + book.id + '/delete') Delete
+        table.table(style='width:100%')
+          tr
+            th
+            th Title
+            th 
+            th
+          - var i=1;
+          each book in books
+            tr
+              td= i++
+              td=book.name
+              td
+                a.btn.btn-outline-info(href=`/books/${book.id}`) View
+              td
+                a.btn.btn-outline-dark(href=`/books/${book.id}/delete`) Delete

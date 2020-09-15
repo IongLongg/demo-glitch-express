@@ -13,33 +13,29 @@ block content
                     a.nav-link(href='/books') Back 
     br
     .container
-        form(action='/transactions/search', method='get')
-            input(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search transaction')
-            input(type='submit', value='Submit')
+        if errors
+            each error in errors
+                .alert.alert-danger= error
+
+        form.form-inline(action='/transactions/search', method='get')
+            input.form-control.mr-2(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search transaction')
+            input.btn.btn-outline-primary(type='submit', value='Search')
         br
         table.table.table-bordered(style='width:100%')
             tr
-                th ID Transaction
-                th(colspan='2') User
-                th(colspan='2') Book
-                th Status
                 th 
+                th User
+                th Book 
+                th Status
+            - var i=1;
             each transaction in transactions
                 tr
-                    td(rowspan='2')= transaction.id
-                    th Id User
-                    td= transaction.user.id
-                    th Id Book
-                    td= transaction.book.id
-                    td(rowspan='2')= transaction.isComplete
-                    td(rowspan='2')
+                    td= i++
+                    td=transaction.user.name
+                    td=transaction.book.name
+                    td
                         if transaction.isComplete
-                            button(disabled) Complete
-                        else
-                            form(action='/transactions/' + transaction.id + '/complete', method='get')
-                                button(type='submit') Complete
-                tr
-                    th Name User
-                    td= transaction.user.name
-                    th Name Book
-                    td= transaction.book.name
+                            button.btn.btn-outline-secondary(disabled) Complete
+                        else 
+                            form(action=`/transactions/${transaction.id}/complete`, method="get")
+                                button.btn.btn-outline-success(type='submit') Complete

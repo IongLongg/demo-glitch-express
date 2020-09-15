@@ -50,6 +50,11 @@ module.exports.search = function (req, res, next) {
 
 module.exports.isComplete = function (req, res, next) {
     var idTransaction = req.params.id
-    db.get('transactions').find({ id: idTransaction }).assign({ isComplete : true}).write()
+    
+    var transactions = db.get('transactions').value();
+    if(transactions.find(tran => tran.id === idTransaction))
+        db.get('transactions').find({ id: idTransaction }).assign({ isComplete : true}).write()
+    else
+        console.log('Cant find');
     res.redirect('/transactions')
 }

@@ -1,20 +1,36 @@
 extends ../layout
 
 block content
-    a(href='/books') Back
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.navbar-brand(href='/users') Users
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+            ul.navbar-nav
+                li.nav-item
+                    a.nav-link(href='/users/create') Create user 
+                li.nav-item
+                    a.nav-link(href='/books') Back 
     br
-    a(href='/users/create') New User
-    br
-    br
-    form(action='/users/search', method='get')
-        input(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search user')
-        input(type='submit', value='Submit')
-    ul 
-        each user in users
-            li= user.name
-                span &nbsp; &nbsp;
-                    a(href='/users/' + user.id) View
-                span &nbsp; &nbsp;
-                    a(href='/users/' + user.id + '/delete') Delete
-                span &nbsp; &nbsp;
-                    a(href='/users/' + user.id + '/edit') Edit
+    .container
+        form.form-inline(action='/users/search', method='get')
+            input.form-control.mr-2(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search user')
+            input.btn.btn-outline-primary(type='submit', value='Search')
+        table.table(style='width:100%')
+            tr
+                th
+                th Name
+                th
+                th
+                th          
+            - var i=1;
+            each user in users
+                tr
+                    td= i++
+                    td= user.name
+                    td
+                        a.btn.btn-outline-info(href=`/users/${user.id}`) View               
+                    td
+                        a.btn.btn-outline-danger(href=`/users/${user.id}/delete`) Delete
+                    td
+                        a.btn.btn-outline-info(href=`/users/${user.id}/edit`) Edit

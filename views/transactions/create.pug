@@ -12,17 +12,15 @@ block content
     .container
         br
         form(action='/transactions/create', method='post')
-            label Users
-            span &nbsp
-            select(name='user')
-                each user in users
-                    option(value= user.id + '|' + user.name)= user.name
-                    label User 
-            span &nbsp &nbsp &nbsp &nbsp
-            label Books
-            span &nbsp
-            select(name='book')
-                each book in books
-                    option(value= book.id + '|' + book.name)= book.name
-            span &nbsp
-            input(type='submit')
+            .form-group
+                label Users
+                select.form-control(name='user')
+                    each user in users
+                        option(value= user.id + '|' + user.name)= user.name
+                        label User 
+            .form-group    
+                label Books
+                select.form-control(name='book')
+                    each book in books
+                        option(value= book.id + '|' + book.name)= book.name
+            input.btn.btn-success(type='submit', value="Create")
