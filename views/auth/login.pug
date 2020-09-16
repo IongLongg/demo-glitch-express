@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        a.navbar-brand(href='/books') Home
+        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarNav.collapse.navbar-collapse
+            ul.navbar-nav
+                li.nav-item.active
+                    a.nav-link(href='/users') Users
+                    span.sr-only (current)
+                li.nav-item
+                    a.nav-link(href='/transactions') Transactions
+                li.nav-item
+                    a.nav-link(href='/') Back 
+    br
+    .container
+        h1 Login
+        if errors 
+            each error in errors  
+                .alert.alert-danger=error
+        br
+        form(action="/auth/login", method="post")
+            .form-group
+                label(for='email') Email address
+                input#exampleInputEmail1.form-control(type='email', name="email", aria-describedby='emailHelp', placeholder='Enter email', required)
+                small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+            .form-group
+                label(for='password') Password
+                input#exampleInputPassword1.form-control(type='password', name="password", placeholder='Password', required)
+            .form-check
+                input#exampleCheck1.form-check-input(type='checkbox')
+                label.form-check-label(for='exampleCheck1') Check me out
+            button.btn.btn-primary.mt-3(type='submit') Sign in

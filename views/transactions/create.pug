@@ -12,12 +12,13 @@ block content
     .container
         br
         form(action='/transactions/create', method='post')
-            .form-group
-                label Users
-                select.form-control(name='user')
-                    each user in users
-                        option(value= user.id + '|' + user.name)= user.name
-                        label User 
+            if isAdmin
+                .form-group
+                    label Users
+                    select.form-control(name='user')
+                        each user in users
+                            option(value= user.id + '|' + user.name)= user.name
+                            label User 
             .form-group    
                 label Books
                 select.form-control(name='book')

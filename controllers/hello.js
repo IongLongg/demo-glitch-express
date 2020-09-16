@@ -1,5 +1,5 @@
 module.exports.index = function (req, res, next) {
     res.render('home', {
-        content: 'Hello Coder Tokyo'
+        content : 'Welcome to your book list'
     })
 }

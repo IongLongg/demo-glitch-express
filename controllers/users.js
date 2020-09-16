@@ -14,6 +14,7 @@ module.exports.getCreate = function (req, res, next) {
 }
 module.exports.postCreate = function (req, res, next) {
     var name = req.body.name
+    
     db.get('users').push({
         id: shortid.generate(),
         name: name

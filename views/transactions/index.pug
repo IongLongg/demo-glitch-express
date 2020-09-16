@@ -18,7 +18,7 @@ block content
                 .alert.alert-danger= error
 
         form.form-inline(action='/transactions/search', method='get')
-            input.form-control.mr-2(type='text', name='name', value=inputSearch ? inputSearch : '', placeholder='Search transaction')
+            input.form-control.mr-2(type='text', name='name', value=(inputSearch ? inputSearch : ''), placeholder='Search transaction')
             input.btn.btn-outline-primary(type='submit', value='Search')
         br
         table.table.table-bordered(style='width:100%')

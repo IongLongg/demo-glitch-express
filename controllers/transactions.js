@@ -2,25 +2,37 @@ var db = require('../lowdb')
 var shortid = require('shortid')
 
 module.exports.index = function (req, res, next) {
-    var dbTransactions = db.get('transactions').value()
+    var userId = req.cookies.userId
+    var user = db.get('users').find({ id : userId }).value()
+    var transactions
+    if(user.isAdmin){
+        transactions = db.get('transactions').value()
+    } else{
+        transactions = db.get('transactions').filter(tran => tran.user.id === userId).value()
+    }
+    
     res.render('transactions/index', {
-        transactions: dbTransactions
+        transactions: transactions
     })
 }
 
 module.exports.getCreate = function (req, res, next) {
+    var user = db.get('users').find({ id : req.cookies.userId}).value()
+    
     var dbBooks = db.get('books').value()
     var dbUsers = db.get('users').value()
     res.render('transactions/create', {
         books: dbBooks,
-        users: dbUsers
+        users: dbUsers,
+        isAdmin: user.isAdmin
     })
 }
 module.exports.postCreate = function (req, res, next) {
-    var reqUser = req.body.user
+    var reqUser = req.body.user || ''
     var reqBook = req.body.book
-    var idUser = reqUser.slice(0, reqUser.indexOf('|'))
-    var nameUser = reqUser.slice(reqUser.indexOf('|') + 1)
+    var idUser = reqUser==='' ? req.cookies.userId : reqUser.slice(0, reqUser.indexOf('|'))
+    var nameUser = reqUser==='' ? db.get('users').find({ id : req.cookies.userId}).value().name 
+                                : reqUser.slice(reqUser.indexOf('|') + 1)
     var idBook = reqBook.slice(0, reqBook.indexOf('|'))
     var nameBook = reqBook.slice(reqBook.indexOf('|') + 1)
 
