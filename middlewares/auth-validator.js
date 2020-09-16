@@ -1,4 +1,5 @@
 var db = require('../lowdb')
+var md5 = require('md5')
 
 module.exports.postLogin = (req, res, next) => {
     var email = req.body.email
@@ -14,7 +15,9 @@ module.exports.postLogin = (req, res, next) => {
         })
         return
     }
-    if(user.password !== password){
+
+    var hashPassword = md5(password)
+    if(user.password !== hashPassword){
         errors.push('Wrong password')
     }
     if(errors.length){
