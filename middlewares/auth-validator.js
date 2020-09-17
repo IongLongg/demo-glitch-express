@@ -1,5 +1,5 @@
 var db = require('../lowdb')
-var md5 = require('md5')
+var bcrypt = require('bcrypt')
 
 module.exports.postLogin = (req, res, next) => {
     var email = req.body.email
@@ -15,11 +15,26 @@ module.exports.postLogin = (req, res, next) => {
         })
         return
     }
-
-    var hashPassword = md5(password)
-    if(user.password !== hashPassword){
-        errors.push('Wrong password')
+    if(!user.wrongLoginCount){
+        db.get('users').find({ id : user.id }).assign({ wrongLoginCount : 0 }).write()
+    } 
+    if(user.wrongLoginCount > 4){
+        db.get('users').find({ id : user.id }).assign({ wrongLoginCount : 0 }).write()
+        res.render('auth/login', {
+            errors : [
+                'Wrong too much'
+            ]
+        })
+        return
+    } else{
+        const saltRounds = 10;
+        var hashPassword = bcrypt.hashSync(user.password, saltRounds)
+        if(bcrypt.compareSync(password, hashPassword) === false){
+            errors.push('Wrong password')
+            user.wrongLoginCount++;
+        }
     }
+
     if(errors.length){
         res.render('auth/login', {
             errors : errors
