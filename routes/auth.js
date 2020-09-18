@@ -1,9 +1,9 @@
-var express = require('express')
+const express = require('express')
 
-var authController = require('../controllers/auth')
-var authValidator = require('../middlewares/auth-validator')
+const authController = require('../controllers/auth')
+const authValidator = require('../validators/auth-validator')
 
-var router = express.Router()
+const router = express.Router()
 
 router.get('/login', authController.login)
 

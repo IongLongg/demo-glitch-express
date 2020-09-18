@@ -1,9 +1,9 @@
-var express = require('express')
+const express = require('express')
 
-var controllerTransactions = require('../controllers/transactions')
-var middlewareTransactions = require('../middlewares/transactions-validator')
+const controllerTransactions = require('../controllers/transactions')
+const validatorTransaction = require('../validators/transactions-validator')
 
-var router = express.Router()
+const router = express.Router()
 
 router.get('/', controllerTransactions.index)
 
@@ -12,6 +12,6 @@ router.post('/create', controllerTransactions.postCreate)
 
 router.get('/search?', controllerTransactions.search)
 
-router.get('/:id/complete', middlewareTransactions.isComplete ,controllerTransactions.isComplete)
+router.get('/:id/complete', validatorTransaction.isComplete ,controllerTransactions.isComplete)
 
 module.exports = router
