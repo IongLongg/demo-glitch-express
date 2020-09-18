@@ -11,7 +11,8 @@ router.post('/create', controllerBook.postCreate)
 
 router.get('/search?', controllerBook.search)
 
-router.get('/:id', controllerBook.view)
+router.get('/:id/update', controllerBook.getUpdate)
+router.post('/:id/update', controllerBook.postUpdate) 
 
 router.get('/:id/delete', controllerBook.delete)
 

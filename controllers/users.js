@@ -1,63 +1,47 @@
-var shortid = require('shortid')
+const shortid = require('shortid')
+const bcrypt = require('bcrypt')
 
-var db = require("../lowdb")
+const db = require("../lowdb")
 
-module.exports.index = function (req, res, next) {
-    var users = db.get('users').value()
+const saltRounds = 5
+
+module.exports.index = function (req, res) {
     res.render('users/index', {
-        users: users
+        users: db.get('users').value()
     })
 }
 
-module.exports.getCreate = function (req, res, next) {
+module.exports.getCreate = function (req, res) {
     res.render('users/create')
 }
-module.exports.postCreate = function (req, res, next) {
-    var name = req.body.name
+module.exports.postCreate = function (req, res) {
+    const user = {
+        id : shortid.generate(),
+        name : req.body.name,
+        email : req.body.email,
+        password : bcrypt.hashSync(req.body.password, saltRounds),
+        isAdmin : false
+    }
     
-    db.get('users').push({
-        id: shortid.generate(),
-        name: name
-    }).write()
+    db.get('users').push(user).write()
     res.redirect('/users')
 }
 
-module.exports.search = function (req, res, next) {
-    var name = req.query.name
-    name ? name = name.toLowerCase() : name = ''
-    var users = db.get('users').value()
-    var resultSearch = users.filter(function (user) {
-        user = user.name.toLowerCase()
-        return user.includes(name) === true
-    })
-    res.render('users/index', {
-        users: resultSearch,
-        inputSearch: req.query.name
-    })
-}
-
-module.exports.view = function (req, res, next) {
-    var id = req.params.id
-    var user = db.get('users').find({ id: id }).value()
-    res.render('users/info-user', {
-        user: user
-    })
-}
-
-module.exports.delete = function (req, res, next) {
-    var id = req.params.id
+module.exports.delete = function (req, res) {
+    let id = req.params.id
     db.get('users').remove({ id: id }).write()
     res.redirect('/users')
 }
 
-module.exports.getEdit = function (req, res, next) {
-    var id = req.params.id
-    var user = db.get('users').find({ id: id }).value()
-    res.render('users/edit-user', {
+module.exports.getUpdate = function (req, res) {
+    let id = req.params.id
+    let user = db.get('users').find({ id: id }).value()
+    res.render('users/update', {
         user: user
     })
 }
-module.exports.postEdit = function (req, res, next) {
+
+module.exports.postUpdate = function (req, res) {
     var id = req.params.id
     var name = req.body.name
     db.get('users').find({ id: id }).assign({ name: name }).write()

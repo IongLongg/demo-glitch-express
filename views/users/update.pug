@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+
+    .container.pt-5
+        h2 Update user
+        form.form-group(action=`/users/${user.id}/update`, method='post', style="width:350px")
+            .form-group
+                label New name: 
+                input.form-control(type='text', name='name', value= user.name)
+            .form-group
+                input.btn.btn-success(type='submit', value='Save')

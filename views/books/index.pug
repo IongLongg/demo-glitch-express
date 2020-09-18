@@ -1,39 +1,30 @@
 extends ../layout
 
 block content
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href='/books') Home
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarNav.collapse.navbar-collapse
-        ul.navbar-nav
-          li.nav-item.active
-            a.nav-link(href='/users') Users
-              span.sr-only (current)
-          li.nav-item
-            a.nav-link(href='/transactions') Transactions
-          li.nav-item
-            a.nav-link(href='/') Back 
-    br
-    .container
+    .container.pt-5
+        h1 Books
+        if errors
+            each error in errors
+                .alert.alert-danger= error
+
         form.form-inline(action='/books/search', method='get')
-            input.form-control.mr-2(type='text', name='name', value=value ? value : '', placeholder='Search book')
-            input.btn.btn-outline-primary(type='submit', value='Search')
+            input.form-control.mr-2(type='text', name='title', value=(inputSearch ? inputSearch : ''), placeholder='Search book')
+            input.btn.btn-primary.mr-2(type='submit', value='Search')
+            a.btn.btn-success(href='books/create') Add
         br
-        a.btn.btn-primary(href='/books/create') New Book
-        br
-        table.table(style='width:100%')
+        table.table.text-center(style='width:100%')
           tr
             th
             th Title
-            th 
-            th
+            th Description
+            th(colspan="2") Action
           - var i=1;
           each book in books
             tr
               td= i++
-              td=book.name
+              td=book.title
+              td=book.description
               td
-                a.btn.btn-outline-info(href=`/books/${book.id}`) View
+                a.btn.btn-outline-primary(href=`/books/${book.id}/update`) Update
               td
-                a.btn.btn-outline-dark(href=`/books/${book.id}/delete`) Delete
+                a.btn.btn-outline-danger(href=`/books/${book.id}/delete`) Delete

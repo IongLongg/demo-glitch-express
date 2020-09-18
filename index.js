@@ -25,7 +25,7 @@ app.use(cookieParser())
 
 app.use('/', routeHello)
 app.use('/auth', routeAuth)
-app.use('/books', routeBooks)
+app.use('/books', authMiddleware.requiredAuth ,routeBooks)
 app.use('/users', authMiddleware.requiredAuth, authMiddleware.requiredAdmin ,routerUsers)
 app.use('/transactions', authMiddleware.requiredAuth, routerTransactions)
 

@@ -1,10 +1,11 @@
-var db = require('../lowdb')
-var shortid = require('shortid')
+const db = require('../lowdb')
+const shortid = require('shortid')
 
 module.exports.index = function (req, res, next) {
-    var userId = req.cookies.userId
-    var user = db.get('users').find({ id : userId }).value()
-    var transactions
+    let userId = req.cookies.userId
+    let user = db.get('users').find({ id : userId }).value()
+    let transactions
+    
     if(user.isAdmin){
         transactions = db.get('transactions').value()
     } else{

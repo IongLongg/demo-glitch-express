@@ -1,17 +1,13 @@
 extends ../layout
 
-block content
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      .navbar-brand New Book
-      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-        span.navbar-toggler-icon
-      #navbarNav.collapse.navbar-collapse
-        ul.navbar-nav
-          li.nav-item
-            a.nav-link(href='/books') Back 
-    
-    .container
-        br
-        form(action='/books/create', method='post')
-            input(type='text', name='nameBook', value='', placeholder='Name Book')
-            input(type='submit', value='Submit')
+block content    
+    .container.pt-5
+        h2 Add book
+        form.form-group(action='/books/create', method='post', style='width:350px')
+            .form-group
+                label Title
+                input.form-control(type='text', name='title', value='')
+            .form-group
+                label Description
+                input.form-control(type='text', name='description', value='')
+            button.btn.btn-success.mt-3(type='submit') Add

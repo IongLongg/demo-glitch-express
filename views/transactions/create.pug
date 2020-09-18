@@ -1,17 +1,10 @@
 extends ../layout
 
 block content
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light
-        .navbar-brand Create Transaction
-        button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-            span.navbar-toggler-icon
-        #navbarNav.collapse.navbar-collapse
-            ul.navbar-nav
-                li.nav-item
-                    a.nav-link(href='/transactions') Back 
-    .container
+    .container.pt-5
+        h1 Create a new transaction
         br
-        form(action='/transactions/create', method='post')
+        form.form-group(action='/transactions/create', method='post', style='width:350px')
             if isAdmin
                 .form-group
                     label Users
