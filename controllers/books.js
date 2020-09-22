@@ -3,9 +3,15 @@ const shortid = require('shortid')
 const db = require("../lowdb")
 
 module.exports.index = function (req, res, next) {
-    let books = db.get('books').value()
+    const books = db.get('books').value()
+    let page = parseInt(req.query.page) || 1
+    let perPage = 10
+    let start = (page-1) * perPage
+    let end = page * perPage
+
     res.render('books/index', {
-        books: books
+        books: books.slice(start, end),
+        page : page
     })
 }
 

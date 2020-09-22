@@ -28,3 +28,17 @@ block content
                 a.btn.btn-outline-primary(href=`/books/${book.id}/update`) Update
               td
                 a.btn.btn-outline-danger(href=`/books/${book.id}/delete`) Delete
+        nav(aria-label='Page navigation example')
+          ul.pagination
+            li.page-item
+              a.page-link(href=`books?page=${page<=1 ? 1 : page-1}`) Previous
+            li.page-item
+              a.page-link(href=`books?page=${page<=1 ? 1 : page-1}`)=page<=1 ? 1 : page-1
+            li.page-item
+              a.page-link(href=`books?page=${page === 1 ? 2 : page}`)=page === 1 ? 2 : page
+            li.page-item
+              a.page-link(href=`books?page=${page === 1 ? 3 : page+1}`)=page === 1 ? 3 : page+1
+            li.page-item
+              a.page-link(href=`books?page=${page+1}`) Next
+
+
