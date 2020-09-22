@@ -1,13 +1,15 @@
-var db = require('../lowdb')
-var bcrypt = require('bcrypt')
+const db = require('../lowdb')
+const bcrypt = require('bcrypt')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-module.exports.postLogin = (req, res, next) => {
-    var email = req.body.email
-    var password = req.body.password
+module.exports.postLogin = async (req, res, next) => {
+    let email = req.body.email
+    let password = req.body.password
+    res.locals.email = email
+    let errors = []
 
-    var errors = []
-
-    var user = db.get('users').find({ email : email}).value()
+    let user = db.get('users').find({ email : email}).value()
     if(!user){
         errors.push('User does not exist')
         res.render('auth/login', {
@@ -18,17 +20,31 @@ module.exports.postLogin = (req, res, next) => {
     if(!user.wrongLoginCount){
         db.get('users').find({ id : user.id }).assign({ wrongLoginCount : 0 }).write()
     } 
-    if(user.wrongLoginCount > 4){
+    if(user.wrongLoginCount >= 4){
+        const msg = {
+            to: user.email,
+            from: 'longhn.B18AT138@stu.ptit.edu.vn',
+            subject: 'Your account was blocked for security',
+            html: '<strong>You need to check out your account</strong>',
+        }
+        
+        sgMail.send(msg)
+            .then(() => {}, err => {
+                console.log(err)
+                if(err.response)
+                    console.log(err.response.body);
+            })
+
         db.get('users').find({ id : user.id }).assign({ wrongLoginCount : 0 }).write()
         res.render('auth/login', {
             errors : [
                 'Wrong too much'
-            ]
+            ],
+            email : ''
         })
         return
     } else{
-        const saltRounds = 10;
-        var hashPassword = bcrypt.hashSync(user.password, saltRounds)
+        let hashPassword = bcrypt.hashSync(user.password, 10)
         if(bcrypt.compareSync(password, hashPassword) === false){
             errors.push('Wrong password')
             user.wrongLoginCount++;
@@ -37,7 +53,7 @@ module.exports.postLogin = (req, res, next) => {
 
     if(errors.length){
         res.render('auth/login', {
-            errors : errors
+            errors : errors,
         })
         return
     }

@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
+const homeRoute = require('./routes/home')
 const routeAuth = require('./routes/auth')
 const routeBooks = require('./routes/books')
 const routerUsers = require('./routes/users')
@@ -20,11 +22,9 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use(cookieParser())
+app.use(cookieParser(process.env.SECRET_KEY))
 
-app.get("/", (req, res) => {
-    res.render("home");
-});
+app.use('', homeRoute);
 app.use('/auth', routeAuth)
 app.use('/books', authMiddleware.requiredAuth ,routeBooks)
 app.use('/users', authMiddleware.requiredAuth, authMiddleware.requiredAdmin ,routerUsers)

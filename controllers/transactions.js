@@ -2,7 +2,7 @@ const db = require('../lowdb')
 const shortid = require('shortid')
 
 module.exports.index = function (req, res, next) {
-    let userId = req.cookies.userId
+    let userId = req.signedCookies.userId
     let user = db.get('users').find({ id : userId }).value()
     let transactions
     
@@ -18,7 +18,7 @@ module.exports.index = function (req, res, next) {
 }
 
 module.exports.getCreate = function (req, res, next) {
-    var user = db.get('users').find({ id : req.cookies.userId}).value()
+    var user = db.get('users').find({ id : req.signedCookies.userId}).value()
     
     var dbBooks = db.get('books').value()
     var dbUsers = db.get('users').value()
@@ -31,8 +31,8 @@ module.exports.getCreate = function (req, res, next) {
 module.exports.postCreate = function (req, res, next) {
     var reqUser = req.body.user || ''
     var reqBook = req.body.book
-    var idUser = reqUser==='' ? req.cookies.userId : reqUser.slice(0, reqUser.indexOf('|'))
-    var nameUser = reqUser==='' ? db.get('users').find({ id : req.cookies.userId}).value().name 
+    var idUser = reqUser==='' ? req.signedCookies.userId : reqUser.slice(0, reqUser.indexOf('|'))
+    var nameUser = reqUser==='' ? db.get('users').find({ id : req.signedCookies.userId}).value().name 
                                 : reqUser.slice(reqUser.indexOf('|') + 1)
     var idBook = reqBook.slice(0, reqBook.indexOf('|'))
     var nameBook = reqBook.slice(reqBook.indexOf('|') + 1)

@@ -7,11 +7,11 @@ block content
         if errors 
             each error in errors  
                 .alert.alert-danger=error
-        br
+        
         form(action="/auth/login", method="post")
             .form-group
                 label(for='email') Email address
-                input.form-control(type='email', name="email", style="width:350px", required)
+                input.form-control(type='email', name="email", style="width:350px", value=email ? email : '', required)
             .form-group
                 label(for='password') Password
                 input.form-control(type='password', name="password", style="width:350px", required)
