@@ -257,14 +257,16 @@
       "name": "Hà Nội",
       "email": "hanoi@gmail.com",
       "password": "123123",
-      "isAdmin": false
+      "isAdmin": false,
+      "avatar": "default-avatar.png"
     },
     {
       "id": "8bnG_qjp4",
       "name": "Lào Cai",
       "email": "laocai@gmail.com",
       "password": "123123",
-      "isAdmin": false
+      "isAdmin": false,
+      "avatar": "default-avatar.png"
     },
     {
       "id": "12ASD12A",
@@ -272,28 +274,40 @@
       "email": "namlong9012@gmail.com",
       "password": "123123",
       "isAdmin": true,
-      "wrongLoginCount": 0
+      "wrongLoginCount": 0,
+      "avatar": "default-avatar.png"
     },
     {
       "id": "xvIYrXInB",
       "name": "Tuan Trung",
       "email": "tuantrung@codersx",
       "password": "$2b$05$QzWeiWWwVg1zE4Bb5kbAT.SCKNZwOO7lanLK4jt4dY7TTpo9lbmxy",
-      "isAdmin": false
+      "isAdmin": false,
+      "avatar": "default-avatar.png"
     },
     {
       "id": "CyyxzqeQg",
       "name": "yen bai",
       "email": "yenbai@gmail.com",
       "password": "$2b$05$1XLAbykhaWQHPzapyCH1VuRdRpT5ReD4n523ZoB6U1tQPlb4UcpAO",
-      "isAdmin": false
+      "isAdmin": false,
+      "avatar": "default-avatar.png"
     },
     {
       "id": "VxmArZdMF",
-      "name": "Hán Nam Long",
+      "name": "Nam Long",
       "email": "lonelyboy_no01@yahoo.com.vn",
       "password": "$2b$05$2Zuba1EiqKiqu8.ZvJp36.HO26Vp1f7.2JBXOXLPyRUAeRqwj9lT6",
-      "isAdmin": false
+      "isAdmin": false,
+      "avatar": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600886353/ydd5zxeeotmynkgqzekb.jpg"
+    },
+    {
+      "id": "uWX0MDydO",
+      "name": "Bao",
+      "email": "baoquan@gmail.com",
+      "password": "$2b$05$cRg4Iev.hoVQfUCAx7TiKOVBvlesMOqzd5yPa/vlvyQIMWw0zrShK",
+      "isAdmin": false,
+      "avatar": "uploads/ea3fa5ad1b1b058196dc23e89ac004fe"
     }
   ],
   "transactions": [

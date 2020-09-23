@@ -2,4 +2,4 @@ extends layout
 
 block content
     .container.d-flex.justify-content-center.pt-5
-        h1= `Welcome ${user.name} to Book List !`
+        h1= `Welcome ${user ? user.name : ''} to Book List !`

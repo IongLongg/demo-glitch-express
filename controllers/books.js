@@ -2,7 +2,7 @@ const shortid = require('shortid')
 
 const db = require("../lowdb")
 
-module.exports.index = function (req, res, next) {
+module.exports.index =  (req, res, next) => {
     const books = db.get('books').value()
     let page = parseInt(req.query.page) || 1
     let perPage = 10
@@ -15,10 +15,10 @@ module.exports.index = function (req, res, next) {
     })
 }
 
-module.exports.getCreate = function (req, res, next) {
+module.exports.getCreate =  (req, res, next) => {
     res.render('books/create')
 }
-module.exports.postCreate = function (req, res, next) {
+module.exports.postCreate =  (req, res, next) => {
     let reqTitle = req.body.title
     let reqDescription = req.body.description
     db.get('books').push({
@@ -29,11 +29,11 @@ module.exports.postCreate = function (req, res, next) {
     res.redirect('/books')
 }
 
-module.exports.search = function (req, res, next) {
+module.exports.search =  (req, res, next) => {
     let title = req.query.title
     title ? title = title.toLowerCase() : title = ''
     let books = db.get('books').value()
-    let resultFind = books.filter(function (book) {
+    let resultFind = books.filter( (book) => {
         book = book.title.toLowerCase()
         return book.includes(title) === true
     })
@@ -43,7 +43,7 @@ module.exports.search = function (req, res, next) {
     })
 }
 
-module.exports.getUpdate = function (req, res) {
+module.exports.getUpdate =  (req, res) => {
     let id = req.params.id
     let book = db.get('books').find({ id: id }).value()
     res.render('books/update', {
@@ -51,7 +51,7 @@ module.exports.getUpdate = function (req, res) {
     })
 }
 
-module.exports.postUpdate = function (req, res) {
+module.exports.postUpdate =  (req, res) => {
     let id = req.params.id
     let title = req.body.title
     let description = req.body.description
@@ -59,7 +59,7 @@ module.exports.postUpdate = function (req, res) {
     res.redirect('/books')
 }
 
-module.exports.delete = function (req, res, next) {
+module.exports.delete =  (req, res, next) => {
     let id = req.params.id
     db.get('books').remove({ id: id }).write()
     res.redirect('/books')
