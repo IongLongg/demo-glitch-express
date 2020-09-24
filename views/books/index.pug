@@ -10,7 +10,7 @@ block content
         form.form-inline(action='/books/search', method='get')
             input.form-control.mr-2(type='text', name='title', value=(inputSearch ? inputSearch : ''), placeholder='Search book')
             input.btn.btn-primary.mr-2(type='submit', value='Search')
-            a.btn.btn-success(href='books/create') Add
+            a.btn.btn-success(href='/books/create') Add
         br
         table.table.text-center(style='width:100%')
           tr

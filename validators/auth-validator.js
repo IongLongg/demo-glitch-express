@@ -5,7 +5,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 module.exports.postLogin = async (req, res, next) => {
     let email = req.body.email
-    let password = req.body.password
     res.locals.email = email
     let errors = []
 
@@ -44,8 +43,7 @@ module.exports.postLogin = async (req, res, next) => {
         })
         return
     } else{
-        let hashPassword = bcrypt.hashSync(user.password, 10)
-        if(bcrypt.compareSync(password, hashPassword) === false){
+        if(bcrypt.compareSync(req.body.password, user.password) === false){
             errors.push('Wrong password')
             user.wrongLoginCount++;
         }

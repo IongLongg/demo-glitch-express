@@ -1,4 +1,5 @@
 const shortid = require('shortid')
+const cloudinary = require('cloudinary').v2
 
 const db = require("../lowdb")
 
@@ -18,14 +19,16 @@ module.exports.index =  (req, res, next) => {
 module.exports.getCreate =  (req, res, next) => {
     res.render('books/create')
 }
-module.exports.postCreate =  (req, res, next) => {
-    let reqTitle = req.body.title
-    let reqDescription = req.body.description
-    db.get('books').push({
-        id: shortid.generate(),
-        title: reqTitle,
-        description: reqDescription
-    }).write()
+module.exports.postCreate = async (req, res, next) => {
+    req.body.id = shortid.generate()
+    await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
+        if(!error){
+            req.body.cover = result.url
+        } else {
+            console.log(error)
+        }
+    })
+    db.get('books').push(req.body).write()
     res.redirect('/books')
 }
 
@@ -51,11 +54,15 @@ module.exports.getUpdate =  (req, res) => {
     })
 }
 
-module.exports.postUpdate =  (req, res) => {
-    let id = req.params.id
-    let title = req.body.title
-    let description = req.body.description
-    db.get('books').find({ id: id }).assign({ title: title, description: description }).write()
+module.exports.postUpdate = async (req, res) => {
+    await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
+        if(!error){
+            req.body.cover = result.url
+        } else {
+            console.log(error)
+        }
+    })
+    db.get('books').find({ id: req.params.id }).assign(req.body).write()
     res.redirect('/books')
 }
 

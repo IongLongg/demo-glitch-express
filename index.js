@@ -1,4 +1,9 @@
 require('dotenv').config()
+require('cloudinary').v2.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.CLOUD_API_KEY, 
+    api_secret: process.env.CLOUD_API_SECRET 
+});
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -26,8 +31,8 @@ app.use(cookieParser(process.env.SESSION_SECRET))
 
 app.use('', homeRoute);
 app.use('/auth', routeAuth)
-app.use('/books', authMiddleware.requiredAuth ,routeBooks)
-app.use('/users', authMiddleware.requiredAuth, authMiddleware.requiredAdmin ,routerUsers)
+app.use('/books',routeBooks)
+app.use('/users', authMiddleware.requiredAuth, routerUsers)
 app.use('/transactions', authMiddleware.requiredAuth, routerTransactions)
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

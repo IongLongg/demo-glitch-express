@@ -3,7 +3,8 @@
     {
       "id": "sUSM10cEV",
       "title": "dac nhan tam",
-      "description": "khong hay"
+      "description": "khong hay",
+      "cover": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600967116/wgc0icegjqgystckyfwc.png"
     },
     {
       "id": "IdPkcBAWg",
@@ -24,11 +25,6 @@
       "id": "gbs-gNGMY",
       "title": "how to influence",
       "description": "teach you how to go pro"
-    },
-    {
-      "id": "MJXCGCs8e",
-      "title": "ReactJS",
-      "description": "day hoc React"
     },
     {
       "id": "XTYr13zet",
@@ -249,6 +245,11 @@
       "id": "OZBi0sl54",
       "title": "Projectionist, The",
       "description": "Suspendisse potenti."
+    },
+    {
+      "id": "dn0UeCGoj",
+      "title": "ReactJS",
+      "description": "hay"
     }
   ],
   "users": [
@@ -257,16 +258,14 @@
       "name": "Hà Nội",
       "email": "hanoi@gmail.com",
       "password": "123123",
-      "isAdmin": false,
-      "avatar": "default-avatar.png"
+      "isAdmin": false
     },
     {
       "id": "8bnG_qjp4",
       "name": "Lào Cai",
       "email": "laocai@gmail.com",
       "password": "123123",
-      "isAdmin": false,
-      "avatar": "default-avatar.png"
+      "isAdmin": false
     },
     {
       "id": "12ASD12A",
@@ -274,24 +273,21 @@
       "email": "namlong9012@gmail.com",
       "password": "123123",
       "isAdmin": true,
-      "wrongLoginCount": 0,
-      "avatar": "default-avatar.png"
+      "wrongLoginCount": 1
     },
     {
       "id": "xvIYrXInB",
       "name": "Tuan Trung",
       "email": "tuantrung@codersx",
       "password": "$2b$05$QzWeiWWwVg1zE4Bb5kbAT.SCKNZwOO7lanLK4jt4dY7TTpo9lbmxy",
-      "isAdmin": false,
-      "avatar": "default-avatar.png"
+      "isAdmin": false
     },
     {
       "id": "CyyxzqeQg",
       "name": "yen bai",
       "email": "yenbai@gmail.com",
       "password": "$2b$05$1XLAbykhaWQHPzapyCH1VuRdRpT5ReD4n523ZoB6U1tQPlb4UcpAO",
-      "isAdmin": false,
-      "avatar": "default-avatar.png"
+      "isAdmin": false
     },
     {
       "id": "VxmArZdMF",
@@ -307,7 +303,23 @@
       "email": "baoquan@gmail.com",
       "password": "$2b$05$cRg4Iev.hoVQfUCAx7TiKOVBvlesMOqzd5yPa/vlvyQIMWw0zrShK",
       "isAdmin": false,
-      "avatar": "uploads/ea3fa5ad1b1b058196dc23e89ac004fe"
+      "avatar": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600961007/v03uehmlmkefm1qv9xjn.jpg",
+      "wrongLoginCount": 0
+    },
+    {
+      "name": "Long 3",
+      "email": "long3@gmail.com",
+      "password": "123123",
+      "id": "LlIngDyBS",
+      "avatar": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600964699/x7vk6vm49lsknnophfjp.jpg"
+    },
+    {
+      "name": "Long 4",
+      "email": "long4@gmail.com",
+      "password": "$2b$10$.3I9t6L5/SzRXF.CklJvhuiKf9BogCNXc789bk.nqib.nl9P2gm7q",
+      "id": "ihlV_B02c",
+      "avatar": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600964879/lqwfgcgfdwk4sxglhxoz.jpg",
+      "wrongLoginCount": 0
     }
   ],
   "transactions": [

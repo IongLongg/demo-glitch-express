@@ -4,7 +4,11 @@ block content
 
     .container.pt-5
         h2 Update book
-        form.form-group(action=`/books/${book.id}/update`, method='post', style="width:350px")
+        form.form-group(action=`/books/${book.id}/update`, method='post', style="width:350px", enctype='multipart/form-data')
+            .form-group    
+                img(src=book.cover || '/images/logo.jpg', alt="", style='width:200px; height:200px')
+            .form-group
+                input.form-control-file(type='file', name='cover')
             .form-group
                 label New title
                 input.form-control(type='text', name='title', value= book.title)

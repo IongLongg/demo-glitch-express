@@ -4,8 +4,6 @@ module.exports.postCreate = (req, res, next) => {
     var errors = []
     if(req.body.name.length > 30)
         errors.push('User name is too long')
-    if(req.body.name === '')
-        errors.push('Name is required')
     let user = db.get('users').find({email: req.body.email }).value();
 
     if (user) {

@@ -3,11 +3,15 @@ extends ../layout
 block content    
     .container.pt-5
         h2 Add book
-        form.form-group(action='/books/create', method='post', style='width:350px')
+        form.form-group(action='/books/create', method='post', style='width:350px', enctype='multipart/form-data')
             .form-group
-                label Title
+                label(for='title') Title
                 input.form-control(type='text', name='title', value='')
             .form-group
-                label Description
+                label(for='description') Description
                 input.form-control(type='text', name='description', value='')
-            button.btn.btn-success.mt-3(type='submit') Add
+            .form-group
+                label(for="cover") Cover
+                input.form-control-file.mr-2(type='file', name='cover',)
+            .form-group
+                input.btn.btn-success(type='submit', value='Create')
