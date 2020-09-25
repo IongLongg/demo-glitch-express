@@ -18,8 +18,10 @@ html
               a.nav-link(href="/books") Books
             li.nav-item
               a.nav-link(href="/transactions") Transactions
-          if user
-            h3(style='color:white')=user.name
+          if mainUser
+            h3.mr-3(style='color:white')=mainUser.name
+            a.btn.btn-secondary(href='/auth/logout')
+            
 
     block content
 

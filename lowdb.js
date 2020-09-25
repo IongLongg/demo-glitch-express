@@ -1,13 +1,14 @@
-var low = require('lowdb')
-var FileSync = require('lowdb/adapters/FileSync')
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
 
-var adapter = new FileSync('db.json')
-var db = low(adapter)
+const adapter = new FileSync('db.json')
+const db = low(adapter)
 
 db.defaults({ 
     books: [],
     users: [],
-    transactions: []
+    transactions: [],
+    sessions: []
 }).write()
 
 module.exports = db

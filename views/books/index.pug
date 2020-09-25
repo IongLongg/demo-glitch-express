@@ -12,22 +12,34 @@ block content
             input.btn.btn-primary.mr-2(type='submit', value='Search')
             a.btn.btn-success(href='/books/create') Add
         br
-        table.table.text-center(style='width:100%')
-          tr
-            th
-            th Title
-            th Description
-            th(colspan="2") Action
-          - var i=1;
+        .row
           each book in books
-            tr
-              td= i++
-              td=book.title
-              td=book.description
-              td
-                a.btn.btn-outline-primary(href=`/books/${book.id}/update`) Update
-              td
-                a.btn.btn-outline-danger(href=`/books/${book.id}/delete`) Delete
+            .card.col-3(style='width: 18rem;')
+              img.card-img-top(src=book.cover || '/images/logo.jpg' alt='Card image cap')
+              .card-body
+                h5.card-title=book.title
+                p.card-text=book.description
+              .card-footer
+                a.card-link.btn.btn-outline-success(href='#') Add to card
+                a.card-link.btn.btn-outline-primary(href=`/books/${book.id}/update`) Profile
+
+
+        //- table.table.text-center(style='width:100%')
+        //-   tr
+        //-     th
+        //-     th Title
+        //-     th Description
+        //-     th(colspan="2") Action
+        //-   - var i=1;
+        //-   each book in books
+        //-     tr
+        //-       td= i++
+        //-       td=book.title
+        //-       td=book.description
+        //-       td
+        //-         a.btn.btn-outline-primary(href=`/books/${book.id}/update`) Update
+        //-       td
+        //-         a.btn.btn-outline-danger(href=`/books/${book.id}/delete`) Delete
         nav.d-flex.justify-content-center(aria-label='Page navigation example')
           ul.pagination
             li.page-item
