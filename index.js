@@ -13,9 +13,10 @@ const routeAuth = require('./routes/auth')
 const routeBooks = require('./routes/books')
 const routerUsers = require('./routes/users')
 const routerTransactions = require('./routes/transactions')
+const cartRouter = require('./routes/cart.route')
 
 const authMiddleware = require('./middlewares/auth-middleware')
-const sessionMiddleware = require('./middlewares/session.middleware')
+const sessionMiddleware = require('./middlewares/session.middleware');
 
 const app = express()
 const port = 3000
@@ -27,14 +28,14 @@ app.use(express.static('public'))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(sessionMiddleware)
 
-app.use('', homeRoute);
+app.use('',homeRoute);
 app.use('/auth', routeAuth)
-app.use('/books',routeBooks)
+app.use('/books', routeBooks)
 app.use('/users', authMiddleware.requiredAuth, routerUsers)
-app.use('/transactions', authMiddleware.requiredAuth, routerTransactions)
+app.use('/transactions', routerTransactions)
+app.use('/cart', cartRouter)
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

@@ -4,13 +4,12 @@
       "id": "sUSM10cEV",
       "title": "dac nhan tam",
       "description": "khong hay",
-      "cover": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1601025951/vjfpdnppej357csskhhl.jpg"
+      "cover": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1600967116/wgc0icegjqgystckyfwc.png"
     },
     {
       "id": "IdPkcBAWg",
       "title": "nguoi nam cham",
-      "description": "chuyen hay",
-      "cover": "http://res.cloudinary.com/dms6sf3zr/image/upload/v1601025976/enslvn7b8ufpvbzzjpik.jpg"
+      "description": "chuyen hay"
     },
     {
       "id": "WHJELPbjc",
@@ -258,21 +257,21 @@
       "id": "IpVSTaaac",
       "name": "Hà Nội",
       "email": "hanoi@gmail.com",
-      "password": "$2b$05$QzWeiWWwVg1zE4Bb5kbAT.SCKNZwOO7lanLK4jt4dY7TTpo9lbmxy",
+      "password": "123123",
       "isAdmin": false
     },
     {
       "id": "8bnG_qjp4",
       "name": "Lào Cai",
       "email": "laocai@gmail.com",
-      "password": "$2b$05$QzWeiWWwVg1zE4Bb5kbAT.SCKNZwOO7lanLK4jt4dY7TTpo9lbmxy",
+      "password": "123123",
       "isAdmin": false
     },
     {
       "id": "12ASD12A",
       "name": "Long",
       "email": "namlong9012@gmail.com",
-      "password": "$2b$05$QzWeiWWwVg1zE4Bb5kbAT.SCKNZwOO7lanLK4jt4dY7TTpo9lbmxy",
+      "password": "123123",
       "isAdmin": true,
       "wrongLoginCount": 1
     },
@@ -332,7 +331,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": true
     },
@@ -344,7 +343,7 @@
       },
       "book": {
         "id": "IdPkcBAWg",
-        "title": "nguoi nam cham"
+        "name": "nguoi nam cham"
       },
       "isComplete": true
     },
@@ -356,7 +355,7 @@
       },
       "book": {
         "id": "WHJELPbjc",
-        "title": "cu di de loi thanh duong"
+        "name": "cu di de loi thanh duong"
       },
       "isComplete": true
     },
@@ -368,7 +367,7 @@
       },
       "book": {
         "id": "WHJELPbjc",
-        "title": "cu di de loi thanh duong"
+        "name": "cu di de loi thanh duong"
       },
       "isComplete": true
     },
@@ -380,7 +379,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": true
     },
@@ -392,7 +391,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": true
     },
@@ -404,7 +403,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": true
     },
@@ -416,7 +415,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": true
     },
@@ -428,7 +427,7 @@
       },
       "book": {
         "id": "NZFmzCALx",
-        "title": "giup con tu duy"
+        "name": "giup con tu duy"
       },
       "isComplete": true
     },
@@ -440,7 +439,7 @@
       },
       "book": {
         "id": "NZFmzCALx",
-        "title": "giup con tu duy"
+        "name": "giup con tu duy"
       },
       "isComplete": false
     },
@@ -452,7 +451,7 @@
       },
       "book": {
         "id": "WHJELPbjc",
-        "title": "cu di de loi thanh duong"
+        "name": "cu di de loi thanh duong"
       },
       "isComplete": false
     },
@@ -464,7 +463,7 @@
       },
       "book": {
         "id": "sUSM10cEV",
-        "title": "dac nhan tam"
+        "name": "dac nhan tam"
       },
       "isComplete": false
     },
@@ -476,9 +475,17 @@
       },
       "book": {
         "id": "gbs-gNGMY",
-        "title": "how to influence"
+        "name": "how to influence"
       },
       "isComplete": false
+    }
+  ],
+  "sessions": [
+    {
+      "id": "XJiLDi4uZ",
+      "cart": [
+        "sUSM10cEV"
+      ]
     }
   ]
 }

@@ -1,17 +1,17 @@
 const express = require('express')
 
-const controllerTransactions = require('../controllers/transactions')
-const validatorTransaction = require('../validators/transactions-validator')
+const controller = require('../controllers/transactions')
+const validator = require('../validators/transactions-validator')
 
 const router = express.Router()
 
-router.get('/', controllerTransactions.index)
+router.get('/', controller.index)
 
-router.get('/create', controllerTransactions.getCreate)
-router.post('/create', controllerTransactions.postCreate)
+router.get('/create', controller.getCreate)
+router.post('/create', controller.postCreate)
 
-router.get('/search?', controllerTransactions.search)
+router.get('/search?', controller.search)
 
-router.get('/:id/complete', validatorTransaction.isComplete ,controllerTransactions.isComplete)
+router.get('/:id/complete', validator.isComplete ,controller.isComplete)
 
 module.exports = router
