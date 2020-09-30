@@ -1,6 +1,3 @@
-const { write } = require("lowdb/adapters/FileSync")
-const shortid = require("shortid")
-const { value } = require("../lowdb")
 const db = require("../lowdb")
 
 module.exports.add = (req, res) => {
@@ -14,11 +11,19 @@ module.exports.add = (req, res) => {
         res.redirect('/books')
         return
     }
-    cart.push(bookId)
+    const book = db.get('books').find({ id : bookId }).value()
+    cart.push(book)
     db.get('sessions')
         .find({ id : sessionId })
         .assign({cart})
         .write()
-    res.locals.alert = 'success'
     res.redirect('/books')
+}
+
+module.exports.view = (req, res) => {
+    const session = db.get('sessions').find({ id : req.signedCookies.sessionId }).value()
+    
+    res.render('cart/view',{
+        session : session
+    })
 }

@@ -3,7 +3,12 @@ extends ../layout
 block content
     .container.pt-5
         h1 Books
+          a.mb-3.btn.btn-lg.btn-light.float-right(href=`/cart/view/${sessionId}`)
+            img.mr-2(src='/images/shopping-cart.png')
+            span.badge.badge-light=inCart
 
+        
+              
         form.form-inline(action='/books/search', method='get')
             input.form-control.mr-2(type='text', name='title', value=(inputSearch ? inputSearch : ''), placeholder='Search book')
             input.btn.btn-primary.mr-2(type='submit', value='Search')

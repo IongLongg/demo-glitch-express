@@ -2,18 +2,12 @@ const db = require('../lowdb')
 const shortid = require('shortid')
 
 module.exports.index =  (req, res, next) => {
+    // TODO: session transaction
     let userId = req.signedCookies.userId
     let user = db.get('users').find({ id : userId }).value()
-    let transactions
-    
-    if(user.isAdmin){
-        transactions = db.get('transactions').value()
-    } else{
-        transactions = db.get('transactions').filter(tran => tran.user.id === userId).value()
-    }
     
     res.render('transactions/index', {
-        transactions: transactions
+        transactions: db.get('transactions').value()
     })
 }
 
