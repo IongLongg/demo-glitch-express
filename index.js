@@ -8,14 +8,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 
-const homeRoute = require('./routes/home')
-const routeAuth = require('./routes/auth')
-const routeBooks = require('./routes/books')
-const routerUsers = require('./routes/users')
-const routerTransactions = require('./routes/transactions')
-const cartRouter = require('./routes/cart.route')
+const homeRouter = require('./routes/home.router')
+const authRouter = require('./routes/auth.router')
+const bookRouter = require('./routes/book.router')
+const userRouter = require('./routes/user.router')
+const transactionRouter = require('./routes/transaction.router')
+const cartRouter = require('./routes/cart.router')
 
-const authMiddleware = require('./middlewares/auth-middleware')
+const authMiddleware = require('./middlewares/auth.middleware')
 const sessionMiddleware = require('./middlewares/session.middleware');
 
 const app = express()
@@ -31,11 +31,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(sessionMiddleware)
 
-app.use('',homeRoute);
-app.use('/auth', routeAuth)
-app.use('/books', routeBooks)
-app.use('/users', authMiddleware.requiredAuth, routerUsers)
-app.use('/transactions', routerTransactions)
+app.use('',homeRouter);
+app.use('/auth', authRouter)
+app.use('/books', bookRouter)
+app.use('/users', authMiddleware.requiredAuth, userRouter)
+app.use('/transactions', transactionRouter)
 app.use('/cart', cartRouter)
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

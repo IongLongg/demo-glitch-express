@@ -3,41 +3,47 @@ const shortid = require('shortid')
 
 module.exports.index =  (req, res, next) => {
     // TODO: session transaction
-    let userId = req.signedCookies.userId
-    let user = db.get('users').find({ id : userId }).value()
+    let transactions = db.get('transactions').value()
+
+    let reqId = req.signedCookies.userId || req.signedCookies.sessionId
+    if(!res.locals.isAdmin){
+        transactions = transactions.filter(tran => tran.user.id === reqId)
+    } 
     
     res.render('transactions/index', {
-        transactions: db.get('transactions').value()
+        transactions: transactions
     })
 }
 
 module.exports.getCreate =  (req, res, next) => {
-    const user = db.get('users').find({ id : req.signedCookies.userId}).value()
-    
-    const dbBooks = db.get('books').value()
-    const dbUsers = db.get('users').value()
+    let users = db.get('users').value()
+    let books = db.get('books').value()
+    if(!res.locals.isAdmin){
+        users = users.find(user => user.id === req.signedCookies.userId)
+    }
+
     res.render('transactions/create', {
-        books: dbBooks,
-        users: dbUsers,
-        isAdmin: user.isAdmin
+        books : books,
+        users : users
     })
 }
-module.exports.postCreate =  (req, res, next) => {
-    let reqUser = req.body.user || ''
-    let reqBook = req.body.book
-    let idUser = reqUser==='' ? req.signedCookies.userId : reqUser.slice(0, reqUser.indexOf('|'))
-    let nameUser = reqUser==='' ? db.get('users').find({ id : req.signedCookies.userId}).value().name 
-                                : reqUser.slice(reqUser.indexOf('|') + 1)
-    let idBook = reqBook.slice(0, reqBook.indexOf('|'))
-    let nameBook = reqBook.slice(reqBook.indexOf('|') + 1)
 
-    let dataTransaction = {
-        id: shortid.generate(),
-        user: { id: idUser, name: nameUser },
-        book: { id: idBook, name: nameBook },
-        isComplete: false
+module.exports.postCreate =  (req, res, next) => {
+    const user = db.get('users').find({ id : req.body.userId }).value()
+    const book = db.get('books').find({ id : req.body.bookId }).value()
+    const transaction = {
+        id : shortid.generate(),
+        user : {
+            id : user.id,
+            name : user.name
+        },
+        book : {
+            id : book.id,
+            title : book.title
+        },
+        isComplete : false
     }
-    db.get('transactions').push(dataTransaction).write()
+    db.get('transactions').push(transaction).write()
     res.redirect('/transactions')
 }
 

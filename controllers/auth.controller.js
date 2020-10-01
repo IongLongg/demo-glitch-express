@@ -17,5 +17,6 @@ module.exports.postLogin = (req, res) => {
 
 module.exports.logout = (req,res) => {
     res.clearCookie('userId')
-    res.render('/')
+    res.clearCookie('sessionId')
+    res.redirect('/')
 }

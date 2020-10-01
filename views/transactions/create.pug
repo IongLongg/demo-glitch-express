@@ -3,18 +3,18 @@ extends ../layout
 block content
     .container.pt-5
         h1 Create a new transaction
+        
         br
         form.form-group(action='/transactions/create', method='post', style='width:350px')
-            if isAdmin
-                .form-group
-                    label Users
-                    select.form-control(name='user')
-                        each user in users
-                            option(value= user.id + '|' + user.name)= user.name
-                            label User 
+            .form-group
+                label Users
+                select.form-control(name='userId')
+                    each user in users
+                        option(value=user.id)=user.name 
+                        label User 
             .form-group    
                 label Books
-                select.form-control(name='book')
+                select.form-control(name='bookId')
                     each book in books
-                        option(value= book.id + '|' + book.name)= book.name
+                        option(value=book.id)=book.title
             input.btn.btn-success(type='submit', value="Create")

@@ -1,8 +1,8 @@
 const express = require('express')
 const multer = require('multer')
 
-const controller = require('../controllers/users')
-const validator = require('../validators/users-validator')
+const controller = require('../controllers/user.controller')
+const validator = require('../validators/user.validator')
 
 const router = express.Router()
 const upload = multer({ dest : './public/uploads/' })

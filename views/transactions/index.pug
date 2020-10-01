@@ -23,7 +23,7 @@ block content
                 tr
                     td= i++
                     td=transaction.user.name
-                    td=transaction.book.name
+                    td=transaction.book.title
                     td
                         if transaction.isComplete
                             button.btn.btn-outline-secondary(disabled) Complete

@@ -8,8 +8,12 @@ const db = require("../lowdb")
 const saltRounds = 10
 
 module.exports.index =  (req, res) => {
+    let users = db.get('users').value()
+    if(!res.locals.isAdmin){
+        users = users.filter(user => user.id === req.signedCookies.userId)
+    }
     res.render('users/index', {
-        users: db.get('users').value()
+        users: users
     })
 }
 

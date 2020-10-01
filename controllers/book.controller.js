@@ -55,7 +55,11 @@ module.exports.getUpdate =  (req, res) => {
 }
 
 module.exports.postUpdate = async (req, res) => {
-    await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
+    await cloudinary.uploader.upload(`./${req.file.path}`, {
+        width : 1429,
+        height : 2048,
+        crop : 'fill'
+    },(error, result) => {
         if(!error){
             req.body.cover = result.url
         } else {
