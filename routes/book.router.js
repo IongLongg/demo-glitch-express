@@ -15,7 +15,7 @@ router.post('/create', upload.single('cover') ,controller.postCreate)
 router.get('/search?', controller.search)
 
 router.get('/:id/update', middleware.requiredAuth,controller.getUpdate)
-router.post('/:id/update', middleware.requiredAuth,upload.single('cover') ,controller.postUpdate) 
+router.post('/:id/update', upload.single('cover') ,controller.postUpdate) 
 
 router.get('/:id/delete', controller.delete)
 

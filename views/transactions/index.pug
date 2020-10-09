@@ -8,7 +8,7 @@ block content
                 .alert.alert-danger= error
 
         form.form-inline(action='/transactions/search', method='get')
-            input.form-control.mr-2(type='text', name='name', value=(inputSearch ? inputSearch : ''), placeholder='Search transaction')
+            input.form-control.mr-2(type='text', name='name', placeholder='Search transaction')
             input.btn.btn-primary.mr-2(type='submit', value='Search')
             a.btn.btn-success(href='transactions/create') Add
         br
@@ -28,5 +28,5 @@ block content
                         if transaction.isComplete
                             button.btn.btn-outline-secondary(disabled) Complete
                         else 
-                            form(action=`/transactions/${transaction.id}/complete`, method="get")
+                            form(action=`/transactions/${transaction._id}/complete`, method="get")
                                 button.btn.btn-outline-success(type='submit') Complete

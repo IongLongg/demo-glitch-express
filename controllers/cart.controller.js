@@ -1,67 +1,58 @@
-const shortid = require("shortid")
-const db = require("../lowdb")
+const Session = require('../models/session.model')
+const Book = require('../models/book.model')
+const User = require('../models/user.model')
+const Transaction = require('../models/transaction.model')
 
-module.exports.add = (req, res) => {
+module.exports.add = async (req, res) => {
     const bookId = req.params.bookId
-    const sessionId = req.signedCookies.sessionId
-    let cart = db.get('sessions')
-                    .find({ id: sessionId })
-                    .get('cart')
-                    .value()
-    if(cart.find(book => book.id === bookId)){
-        res.redirect('back')
-        return
-    }
-    const book = db.get('books').find({ id : bookId }).value()
-    cart.push(book)
-    db.get('sessions')
-        .find({ id : sessionId })
-        .assign({cart})
-        .write()
+    const session = await Session.findById(req.signedCookies.sessionId).exec()
+    const book = await Book.findById(bookId).exec()
+    session.cart.push(book)
+    await session.save() 
     res.redirect('/books')
 }
 
-module.exports.delete = (req, res) => {
-    db.get('sessions')
-        .find({ id : req.signedCookies.sessionId })
-        .get('cart')
-        .remove({ id : req.params.bookId })
-        .write()
+module.exports.delete = async (req, res) => {
+    const session = await Session.findById(req.signedCookies.sessionId).exec()
+    const cart = session.cart.filter(book => book._id.toString() !== req.params.bookId)
+    session.cart = cart
+    await session.save()
     res.redirect('back')
 }
 
-module.exports.view = (req, res) => {
-    const session = db.get('sessions').find({ id : req.signedCookies.sessionId }).value()
-    
+module.exports.view = async (req, res) => {
+    const session = await Session.findById(req.signedCookies.sessionId).exec()
     res.render('cart/view',{
         session : session
     })
 }
 
-module.exports.save = (req, res) => {
-    const session = db.get('sessions').find({ id : req.signedCookies.sessionId }).value()
+module.exports.save = async (req, res) => {
+    const session = await Session.findById(req.signedCookies.sessionId).exec()
 
-    let user = db.get('users').find({ id : req.signedCookies.userId}).value()
+    let user = await User.findById(req.signedCookies.userId).exec()
     if(!user){
         user = {
-            id : req.signedCookies.sessionId,
+            _id : req.signedCookies.sessionId,
             name : `Session ${req.signedCookies.sessionId}`
         }
     }
-    session.cart.map(book => {
-        const newTransaction = {
-            id : shortid.generate(),
+    const transactions = await session.cart.map(book => {
+        return {
             user : {
-                id : user.id,
+                id : user._id,
                 name : user.name
             },
             book : {
-                id : book.id,
+                id : book._id,
                 title : book.title
             },
             isComplete : false
         }
-        db.get('transactions').push(newTransaction).write()
     })
+    await Transaction.create(transactions)
+    session.cart = []
+    await session.save()
+        
     res.redirect('/transactions')
 }

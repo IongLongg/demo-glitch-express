@@ -21,6 +21,9 @@ html
           if mainUser
             h3.mr-3(style='color:white')=mainUser.name
             a.btn.btn-secondary(href='/auth/logout') Logout
+          else
+            a.btn.btn-light(href='/auth/login') Login
+
           
             
 

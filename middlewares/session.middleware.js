@@ -1,23 +1,21 @@
-const shortid = require("shortid")
-const db = require("../lowdb")
+const shortid = require('shortid')
 
-module.exports = (req,res, next) => {
+const Session = require('../models/session.model')
+const User = require('../models/user.model')
+
+module.exports = async (req,res, next) => {
     if(!req.signedCookies.sessionId){
         const sessionId = shortid.generate()
         res.cookie('sessionId', sessionId, { signed : true})
-        // console.log('create');
-        db.get('sessions').push({
-            id : sessionId,
-            cart : [],
-            transactions : []
-        }).write()
+        const creation = await Session.create({_id : sessionId, cart : []})
+        creation.save()
     } else {
-        const session = db.get('sessions').find({ id : req.signedCookies.sessionId }).value()
+        const session = await Session.findById(req.signedCookies.sessionId).exec()
         res.locals.sessionId = req.signedCookies.sessionId
         res.locals.inCart = session.cart.length
     }
     if(req.signedCookies.userId){
-        const user = db.get('users').find({ id : req.signedCookies.userId }).value()
+        const user = await User.findById(req.signedCookies.userId).exec()
         res.locals.mainUser = user
         res.locals.isAdmin = user.isAdmin
     }

@@ -1,54 +1,45 @@
-const shortid = require('shortid')
 const cloudinary = require('cloudinary').v2
+const Book = require('../models/book.model')
 
-const db = require("../lowdb")
-
-module.exports.index =  (req, res, next) => {
-    const books = db.get('books').value()
-    let page = parseInt(req.query.page) || 1
-    let perPage = 10
-    let start = (page-1) * perPage
-    let end = page * perPage
-
+module.exports.index = async (req, res) => {
+    const books = await Book.find()
     res.render('books/index', {
-        books: books.slice(start, end),
-        page : page
+        books: books
     })
 }
 
-module.exports.getCreate =  (req, res, next) => {
+module.exports.getCreate =  (req, res) => {
     res.render('books/create')
 }
-module.exports.postCreate = async (req, res, next) => {
-    req.body.id = shortid.generate()
-    await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
+
+module.exports.postCreate = async (req, res) => {
+    await cloudinary.uploader.upload(`./${req.file.path}`, {
+        width : 1429,
+        height : 2048,
+        crop : 'fill'
+    },(error, result) => {
         if(!error){
             req.body.cover = result.url
         } else {
             console.log(error)
         }
     })
-    db.get('books').push(req.body).write()
+    await Book.create(req.body)
     res.redirect('/books')
 }
 
-module.exports.search =  (req, res, next) => {
-    let title = req.query.title
-    title ? title = title.toLowerCase() : title = ''
-    let books = db.get('books').value()
-    let resultFind = books.filter( (book) => {
-        book = book.title.toLowerCase()
-        return book.includes(title) === true
-    })
+module.exports.search = async (req, res) => {
+    const queryTitle = req.query.title.toLowerCase()
+    const books = (await Book.find().exec()).filter(book => book.title.toLowerCase().indexOf(queryTitle) !== -1)
+                            
     res.render('books/index', {
-        books: resultFind,
-        value: req.query.title
+        books: books,
+        searchValue: req.query.title
     })
 }
 
-module.exports.getUpdate =  (req, res) => {
-    let id = req.params.id
-    let book = db.get('books').find({ id: id }).value()
+module.exports.getUpdate = async (req, res) => {
+    const book = await Book.findOne({_id : req.params.id}).exec()
     res.render('books/update', {
         book: book
     })
@@ -66,12 +57,11 @@ module.exports.postUpdate = async (req, res) => {
             console.log(error)
         }
     })
-    db.get('books').find({ id: req.params.id }).assign(req.body).write()
+    await Book.findByIdAndUpdate(req.params.id, req.body, {new : true})
     res.redirect('/books')
 }
 
-module.exports.delete =  (req, res, next) => {
-    let id = req.params.id
-    db.get('books').remove({ id: id }).write()
+module.exports.delete = async (req, res) => {
+    await Book.findByIdAndDelete(req.params.id)
     res.redirect('/books')
 }

@@ -1,7 +1,7 @@
-const db = require('../lowdb')
+const User = require("../models/user.model")
 
-module.exports.home = (req, res) => {
-    const user = db.get('users').find({ id : req.signedCookies.userId }).value()
+module.exports.home = async (req, res) => {
+    const user = await User.findById(req.signedCookies.userId).exec()
     res.render('home', {
         user : user
     })

@@ -1,10 +1,11 @@
 const express = require('express')
 
 const controller = require('../controllers/cart.controller')
+const validator = require('../validators/cart.validator')
 
 const router = express.Router()
 
-router.get('/add/:bookId', controller.add)
+router.get('/add/:bookId', validator.isExisted ,controller.add)
 
 router.get('/:bookId/delete', controller.delete)
 

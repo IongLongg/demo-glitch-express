@@ -1,17 +1,12 @@
-const shortid = require('shortid')
 const bcrypt = require('bcrypt')
+const User = require('../models/user.model')
 const cloudinary = require('cloudinary').v2
-
-
-const db = require("../lowdb")
 
 const saltRounds = 10
 
-module.exports.index =  (req, res) => {
-    let users = db.get('users').value()
-    if(!res.locals.isAdmin){
-        users = users.filter(user => user.id === req.signedCookies.userId)
-    }
+module.exports.index = async (req, res) => {
+    const users = await User.find().exec()
+    
     res.render('users/index', {
         users: users
     })
@@ -41,16 +36,13 @@ module.exports.delete =  (req, res) => {
     res.redirect('/users')
 }
 
-module.exports.getProfile =  (req, res) => {
-    let id = req.params.id
-    let user = db.get('users').find({ id: id }).value()
+module.exports.getProfile = async (req, res) => {
     res.render('users/profile', {
-        user: user
+        user: await User.findById(req.params.id).exec()
     })
 }
 
 module.exports.postProfile = async (req, res) => {
-    let id = req.params.id
     await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
         if(!error){
             req.body.avatar = result.url
@@ -59,6 +51,6 @@ module.exports.postProfile = async (req, res) => {
         }
     })
     
-    db.get('users').find({ id: id }).assign(req.body).write()
+    await User.findByIdAndUpdate(req.params.id, req.body, {new : true})
     res.redirect('back')
 }

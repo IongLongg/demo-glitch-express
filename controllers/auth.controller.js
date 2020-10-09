@@ -1,13 +1,11 @@
-const db = require('../lowdb')
+const User = require('../models/user.model')
 
 module.exports.login = (req, res) => {
     res.render('auth/login')
 }
 
-module.exports.postLogin = (req, res) => {
-    let email = req.body.email
-
-    let user = db.get('users').find({ email : email}).value()
+module.exports.postLogin = async (req, res) => {
+    const user = await User.findOne({email : req.body.email}).exec()
     
     res.cookie("userId", user.id, {
         signed : true

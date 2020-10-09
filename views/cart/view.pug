@@ -20,8 +20,8 @@ block content
                             th(scope='row')=i++
                             td=book.title
                             td
-                                a.btn.btn-outline-danger(href=`/cart/${book.id}/delete`) Remove
-        a.float-right.btn.btn-success(href=`/cart/save/${session.id}`) Save
+                                a.btn.btn-outline-danger(href=`/cart/${book._id}/delete`) Remove
+        a.float-right.btn.btn-success(href=`/cart/save/${session._id}`) Save
 
 
     

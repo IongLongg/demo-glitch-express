@@ -1,73 +1,50 @@
-const db = require('../lowdb')
-const shortid = require('shortid')
+const Book = require("../models/book.model")
+const Transaction = require("../models/transaction.model")
+const User = require("../models/user.model")
 
-module.exports.index =  (req, res, next) => {
-    // TODO: session transaction
-    let transactions = db.get('transactions').value()
-
+module.exports.index = async  (req, res) => {
     let reqId = req.signedCookies.userId || req.signedCookies.sessionId
-    if(!res.locals.isAdmin){
-        transactions = transactions.filter(tran => tran.user.id === reqId)
-    } 
-    
+
+    const transactions = await Transaction.find().exec()
+
     res.render('transactions/index', {
-        transactions: transactions
+        transactions: transactions.filter(tran => tran.user.id === reqId)
     })
 }
 
-module.exports.getCreate =  (req, res, next) => {
-    let users = db.get('users').value()
-    let books = db.get('books').value()
-    if(!res.locals.isAdmin){
-        users = users.find(user => user.id === req.signedCookies.userId)
-    }
+module.exports.getCreate = async (req, res) => {
+    const users = await User.find().exec()
+    const books = await Book.find().exec()
 
     res.render('transactions/create', {
         books : books,
-        users : users
+        users : users.filter(user => user._id.toString() === req.signedCookies.userId)
     })
 }
 
-module.exports.postCreate =  (req, res, next) => {
-    const user = db.get('users').find({ id : req.body.userId }).value()
-    const book = db.get('books').find({ id : req.body.bookId }).value()
+module.exports.postCreate = async (req, res) => {
+    const user = await User.findById(req.body.userId).exec()
+    const book = await Book.findById(req.body.bookId).exec()
     const transaction = {
-        id : shortid.generate(),
         user : {
-            id : user.id,
+            id : user._id,
             name : user.name
         },
         book : {
-            id : book.id,
+            id : book._id,
             title : book.title
         },
         isComplete : false
     }
-    db.get('transactions').push(transaction).write()
+    await Transaction.create(transaction)
     res.redirect('/transactions')
 }
 
-module.exports.search =  (req, res, next) => {
-    let reqName = req.query.name
-    reqName ? reqName = reqName.toLowerCase() : ''
-    let dbTransactions = db.get('transactions').value()
-    let resultSearch = dbTransactions.filter( (transaction) => {
-        let nameUser = transaction.user.name.toLowerCase()
-        return nameUser.includes(reqName) === true
-    })
-    res.render('transactions/index', {
-        transactions: resultSearch,
-        inputSearch: req.query.name
-    })
+module.exports.search =  (req, res) => {
+    // TODO: search
 }
 
-module.exports.isComplete =  (req, res, next) => {
-    let idTransaction = req.params.id
-    
-    const transactions = db.get('transactions').value();
-    if(transactions.find(tran => tran.id === idTransaction))
-        db.get('transactions').find({ id: idTransaction }).assign({ isComplete : true}).write()
-    else
-        console.log('Cant find');
-    res.redirect('/transactions')
+module.exports.isComplete = async (req, res) => {
+    await Transaction.findByIdAndUpdate(req.params.id, {isComplete : true}, {new : true})
+    res.redirect('back')
 }

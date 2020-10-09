@@ -3,7 +3,7 @@ extends ../layout
 block content
 
     .container.pt-5
-        h2 Update book
+        h2 Update Book
         form.form-group(action=`/books/${book.id}/update`, method='post', style="width:350px", enctype='multipart/form-data')
             .form-group    
                 img(src=book.cover || '/images/logo.jpg', alt="", style='width:200px; height:200px')

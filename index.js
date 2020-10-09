@@ -7,6 +7,7 @@ require('cloudinary').v2.config({
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose')
 
 const homeRouter = require('./routes/home.router')
 const authRouter = require('./routes/auth.router')
@@ -21,6 +22,8 @@ const sessionMiddleware = require('./middlewares/session.middleware');
 const app = express()
 const port = 3000
 
+mongoose.connect(process.env.MONGO_URL)
+
 app.set('views', './views')
 app.set('view engine', 'pug')
 
@@ -34,7 +37,7 @@ app.use(sessionMiddleware)
 app.use('',homeRouter);
 app.use('/auth', authRouter)
 app.use('/books', bookRouter)
-app.use('/users', authMiddleware.requiredAuth, userRouter)
+app.use('/users', authMiddleware.requiredAuth,userRouter)
 app.use('/transactions', transactionRouter)
 app.use('/cart', cartRouter)
 
