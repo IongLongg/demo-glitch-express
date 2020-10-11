@@ -16,6 +16,9 @@ const userRouter = require('./routes/user.router')
 const transactionRouter = require('./routes/transaction.router')
 const cartRouter = require('./routes/cart.router')
 
+const apiTransactionRouter = require('./api/routes/transaction.route')
+const apiLoginRouter = require('./api/routes/auth.route')
+
 const authMiddleware = require('./middlewares/auth.middleware')
 const sessionMiddleware = require('./middlewares/session.middleware');
 
@@ -40,5 +43,8 @@ app.use('/books', bookRouter)
 app.use('/users', authMiddleware.requiredAuth,userRouter)
 app.use('/transactions', transactionRouter)
 app.use('/cart', cartRouter)
+
+app.use('/api/transactions', apiTransactionRouter)
+app.use('/api/login', apiLoginRouter)
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
