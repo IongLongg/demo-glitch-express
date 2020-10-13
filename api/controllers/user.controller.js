@@ -46,13 +46,38 @@ module.exports.login = async (req, res) => {
     }
 
     res.json({
-        message : "Found",
-        data : {
+        message : "Login success",
+        data : user
+    })
+}
+
+module.exports.logout = (req, res) => {
+    res.clearCookie('userId')
+    res.clearCookie('sessionId')
+    res.json({
+        message : 'Logout success'
+    })
+}
+
+module.exports.getById = (req, res) => {
+    User.findById(req.params.id)
+        .then(user => res.json({
+            data : {
+                name : user.name,
+                email : user.email,
+                avatar : user.avatar,
+            }
+        }))
+        .catch(err => res.status(404).json({message : 'Not found'}))
+}
+
+module.exports.index = async (req, res) => {
+    const users = await User.find().exec()
+    res.json(users.map(user => {
+        return {
             name : user.name,
             email : user.email,
-            isAdmin : user.isAdmin,
             avatar : user.avatar,
-            wrongLoginCount : user.wrongLoginCount
         }
-    })
+    }))
 }

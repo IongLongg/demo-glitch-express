@@ -11,7 +11,7 @@ router.get('/:id', controller.getById)
 
 router.post('/create', schema.createBookSchema ,controller.create)
 
-router.put('/update/:id', schema.createBookSchema ,controller.update)
+router.put('/:id/update', schema.createBookSchema ,controller.update)
 
 router.get('/:id/delete', controller.delete)
 

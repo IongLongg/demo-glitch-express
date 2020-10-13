@@ -17,7 +17,7 @@ const transactionRouter = require('./routes/transaction.router')
 const cartRouter = require('./routes/cart.router')
 
 const apiTransactionRouter = require('./api/routes/transaction.route')
-const apiLoginRouter = require('./api/routes/auth.route')
+const apiUserRouter = require('./api/routes/user.route')
 const apiBookRoute = require('./api/routes/book.route')
 
 const authMiddleware = require('./middlewares/auth.middleware')
@@ -45,7 +45,7 @@ app.use('/users', authMiddleware.requiredAuth,userRouter)
 app.use('/transactions', transactionRouter)
 app.use('/cart', cartRouter)
 
-app.use('/api/login', apiLoginRouter)
+app.use('/api/users', apiUserRouter)
 app.use('/api/books', apiBookRoute)
 app.use('/api/transactions', apiTransactionRouter)
 
