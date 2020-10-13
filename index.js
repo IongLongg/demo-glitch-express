@@ -38,6 +38,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(sessionMiddleware)
 
+// app.get('', (req,res, next) => {
+//     var a
+//     a.foo()
+// })
 app.use('',homeRouter);
 app.use('/auth', authRouter)
 app.use('/books', bookRouter)
@@ -48,5 +52,10 @@ app.use('/cart', cartRouter)
 app.use('/api/users', apiUserRouter)
 app.use('/api/books', apiBookRoute)
 app.use('/api/transactions', apiTransactionRouter)
+
+app.use(function(err, req, res, next) {
+    res.status(500);
+    res.send("<h1>Oops, something went wrong.</h1><img src='/images/500-Error-Log-File.png'>")
+});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
