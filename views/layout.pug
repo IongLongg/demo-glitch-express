@@ -18,11 +18,16 @@ html
               a.nav-link(href="/books") Books
             li.nav-item
               a.nav-link(href="/transactions") Transactions
+            li.nav-item
+              a.nav-link(href="/shop") Shop
           if mainUser
             h3.mr-3(style='color:white')=mainUser.name
             a.btn.btn-secondary(href='/auth/logout') Logout
+          if shop
+            h3.mr-3(style='color:white')=shop.name
+            a.btn.btn-secondary(href='/shop/auth/logout') Logout
           else
-            a.btn.btn-light(href='/auth/login') Login
+            a.btn.btn-light(href='/auth/login') User Login
 
           
             

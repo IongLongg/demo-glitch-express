@@ -20,8 +20,13 @@ const apiTransactionRouter = require('./api/routes/transaction.route')
 const apiUserRouter = require('./api/routes/user.route')
 const apiBookRoute = require('./api/routes/book.route')
 
+const shopRoute = require('./shop/routes/main.route')
+const authShopRoute = require('./shop/routes/auth.route')
+const bookShopRoute = require('./shop/routes/book.route')
+
 const authMiddleware = require('./middlewares/auth.middleware')
-const sessionMiddleware = require('./middlewares/session.middleware');
+const sessionMiddleware = require('./middlewares/session.middleware')
+const errorHandling = require('./middlewares/error.handling')
 
 const app = express()
 const port = 3000
@@ -45,7 +50,7 @@ app.use(sessionMiddleware)
 app.use('',homeRouter);
 app.use('/auth', authRouter)
 app.use('/books', bookRouter)
-app.use('/users', authMiddleware.requiredAuth,userRouter)
+app.use('/users', authMiddleware.requiredAuth, userRouter)
 app.use('/transactions', transactionRouter)
 app.use('/cart', cartRouter)
 
@@ -53,9 +58,10 @@ app.use('/api/users', apiUserRouter)
 app.use('/api/books', apiBookRoute)
 app.use('/api/transactions', apiTransactionRouter)
 
-app.use(function(err, req, res, next) {
-    res.status(500);
-    res.send("<h1>Oops, something went wrong.</h1><img src='/images/500-Error-Log-File.png'>")
-});
+app.use('/shop/books', bookShopRoute)
+app.use('/shop', shopRoute)
+app.use('/shop/auth', authShopRoute)
+
+app.use(errorHandling);
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

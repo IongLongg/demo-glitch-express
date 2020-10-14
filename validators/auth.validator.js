@@ -3,6 +3,7 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 const User = require('../models/user.model')
+const Shop = require('../models/shop.model')
 
 module.exports.postLogin = async (req, res, next) => {
     const reqEmail = req.body.email
@@ -57,3 +58,29 @@ module.exports.postLogin = async (req, res, next) => {
     }
     next();
 }
+
+module.exports.postShopLogin = async (req, res, next) => {
+    const reqEmail = req.body.email
+    const errors = []
+
+    const shop = await Shop.findOne({email : reqEmail}).exec()
+    if(!shop){
+        errors.push('Shop does not exist')
+        res.render('shop/auth/login', {
+            errors : errors
+        })
+        return
+    }
+
+    if(bcrypt.compareSync(req.body.password, shop.password) === false){
+        errors.push('Wrong password')
+    }
+
+    if(errors.length){
+        res.render('shop/auth/login', {
+            errors : errors,
+        })
+        return
+    }
+    next();
+} 

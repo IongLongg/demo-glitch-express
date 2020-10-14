@@ -1,3 +1,4 @@
+const Session = require('../models/session.model')
 const User = require('../models/user.model')
 
 module.exports.login = (req, res) => {
@@ -13,8 +14,9 @@ module.exports.postLogin = async (req, res) => {
     res.redirect('/')
 }
 
-module.exports.logout = (req,res) => {
+module.exports.logout = async (req,res) => {
     res.clearCookie('userId')
     res.clearCookie('sessionId')
-    res.redirect('/')
+    await Session.findByIdAndDelete(req.signedCookies.sessionId)
+    res.redirect('/login')
 }

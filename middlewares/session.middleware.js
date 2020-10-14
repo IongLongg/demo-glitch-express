@@ -1,6 +1,7 @@
 const shortid = require('shortid')
 
 const Session = require('../models/session.model')
+const Shop = require('../models/shop.model')
 const User = require('../models/user.model')
 
 module.exports = async (req,res, next) => {
@@ -18,6 +19,10 @@ module.exports = async (req,res, next) => {
         const user = await User.findById(req.signedCookies.userId).exec()
         res.locals.mainUser = user
         res.locals.isAdmin = user.isAdmin
+    }
+    if(req.signedCookies.shopId){
+        const shop = await Shop.findById(req.signedCookies.shopId).exec()
+        res.locals.shop = shop
     }
     next()
 }

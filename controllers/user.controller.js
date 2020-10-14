@@ -2,8 +2,6 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user.model')
 const cloudinary = require('cloudinary').v2
 
-const saltRounds = 10
-
 module.exports.index = async (req, res) => {
     const users = await User.find().exec()
     
@@ -16,7 +14,6 @@ module.exports.getCreate =  (req, res) => {
     res.render('users/create')
 }
 module.exports.postCreate = async (req, res) => {
-    req.body.id = shortid.generate()
     await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {
         if(!error){
             req.body.avatar = result.url
@@ -24,15 +21,14 @@ module.exports.postCreate = async (req, res) => {
             console.log(error)
         }
     })
-    let hashPassword = bcrypt.hashSync(req.body.password, saltRounds)
+    let hashPassword = bcrypt.hashSync(req.body.password, 10)
     req.body.password = hashPassword
-    db.get('users').push(req.body).write()
+    await User.create(req.body)
     res.redirect('/users')
 }
 
-module.exports.delete =  (req, res) => {
-    let id = req.params.id
-    db.get('users').remove({ id: id }).write()
+module.exports.delete = async (req, res) => {
+    await User.findByIdAndDelete(req.params.id)
     res.redirect('/users')
 }
 

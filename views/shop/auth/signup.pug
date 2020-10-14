@@ -1,0 +1,24 @@
+extends ../../layout
+
+block content    
+    .container.pt-5
+        h2 Create Shop
+        form.form-group(action='/shop/auth/signup', method='post', style='width:350px', enctype='multipart/form-data')
+            .form-group
+                label(for='name') Name 
+                input.form-control(type='text', name='name', required)
+            .form-group
+                label(for='email') Email 
+                input.form-control(type='email', name='email', required)
+            .form-group
+                label(for="password") Password
+                input.form-control(type="password", name='password', required)
+            .form-group
+                label(for='phone') Phone
+                input.form-control(type='number', name='phone', required)
+            .form-group
+                label(for="logo") Logo
+                input.form-control-file.mr-2(type='file', name='logo', required)
+            .form-group
+                a.btn.btn-success(href='/shop/auth/login') Login
+                input.btn.btn-primary.ml-4(type='submit', value='Sign up')
