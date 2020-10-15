@@ -23,6 +23,8 @@ const apiBookRoute = require('./api/routes/book.route')
 const shopRoute = require('./shop/routes/main.route')
 const authShopRoute = require('./shop/routes/auth.route')
 const bookShopRoute = require('./shop/routes/book.route')
+const cartShopRoute = require('./shop/routes/cart.route')
+const transactionShopRoute = require('./shop/routes/transaction.route')
 
 const authMiddleware = require('./middlewares/auth.middleware')
 const sessionMiddleware = require('./middlewares/session.middleware')
@@ -59,6 +61,8 @@ app.use('/api/books', apiBookRoute)
 app.use('/api/transactions', apiTransactionRouter)
 
 app.use('/shop/books', bookShopRoute)
+app.use('/shop/cart', cartShopRoute)
+app.use('/shop/transactions', transactionShopRoute)
 app.use('/shop', shopRoute)
 app.use('/shop/auth', authShopRoute)
 

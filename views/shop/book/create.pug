@@ -1,0 +1,17 @@
+extends ../layout
+
+block content    
+    .container.pt-5
+        h2 Add Shop book
+        form.form-group(action='/shop/books/create', method='post', style='width:350px', enctype='multipart/form-data')
+            .form-group
+                label(for='title') Title
+                input.form-control(type='text', name='title', value='')
+            .form-group
+                label(for='description') Description
+                input.form-control(type='text', name='description', value='')
+            .form-group
+                label(for="cover") Cover
+                input.form-control-file.mr-2(type='file', name='cover',)
+            .form-group
+                input.btn.btn-success(type='submit', value='Create')

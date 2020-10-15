@@ -3,30 +3,32 @@ extends ../layout
 block content
     .container.pt-5
         h1 Books
-            a.mb-3.btn.btn-lg.btn-light.float-right(href=`/cart/view/${sessionId}`)
+            a.mb-3.btn.btn-lg.btn-light.float-right(href=`/shop/cart/view/${sessionId}`)
                 img.mr-2(src='/images/shopping-cart.png')
                 span.badge.badge-light=inCart
 
         if error
             .alert.alert-primary=error
-                
-        form.form-inline(action='/books/search', method='get')
+
+        form.form-inline(action='/shop/books/search', method='get')
             input.form-control.mr-2(type='text', name='title', value=(searchValue ? searchValue : ''), placeholder='Searching ...')
             input.btn.btn-primary.mr-2(type='submit', value='Search')
-            a.btn.btn-success(href='/books/create') Add
+            if shopAdmin
+                a.btn.btn-success(href='/shop/books/create') Add
         br
         .row
             each book in books
                 .col-sm-6.col-md-4.col-lg-3
                     .card.mb-3
-                        a(href=`/books/${book.id}/update`)
-                        img.card-img-top(src=book.cover || '/images/logo.jpg' alt='Card image cap')
+                        a(href=`/shop/books/${book.id}/update`)
+                            img.card-img-top(src=book.cover || '/images/logo.jpg' alt='Card image cap')
                         .card-body
-                        h5.card-title=book.title
-                        p.card-text=book.description
-                        a.card-link.btn.btn-outline-success(href=`/cart/add/${book.id}`) Add to card
-                        if isAdmin
-                            a.btn.btn-outline-danger.ml-3(href=`/books/${book.id}/delete`) Delete
+                            h5.card-title=book.title
+                            p.card-text=book.description
+                            a.card-link.btn.btn-outline-success(href=`/shop/cart/add/${book.id}`) Add to card
+                            if shopAdmin
+                                a.btn.btn-outline-danger.ml-3(href=`/shop/books/${book.id}/delete`) Delete
+
         //- nav.d-flex.justify-content-center(aria-label='Page navigation example')
         //-   ul.pagination
         //-     li.page-item

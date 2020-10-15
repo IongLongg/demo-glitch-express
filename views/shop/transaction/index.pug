@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    .container.pt-5
+        h1 Shop Transactions
+        if errors
+            each error in errors
+                .alert.alert-danger= error
+
+        form.form-inline(action='/shop/transactions/search', method='get')
+            input.form-control.mr-2(type='text', name='name', placeholder='Search transaction')
+            input.btn.btn-primary.mr-2(type='submit', value='Search')
+            if shopAdmin
+                a.btn.btn-success(href='/shop/transactions/create') Add
+        br
+        table.table.table-bordered.text-center(style='width:100%')
+            tr
+                th 
+                th Shop
+                th User
+                th Book 
+                th Status
+            - var i=1;
+            each transaction in transactions
+                tr
+                    td= i++
+                    td=transaction.shop.name
+                    td=transaction.user.name
+                    td=transaction.book.title
+                    td
+                        if transaction.isComplete
+                            button.btn.btn-outline-secondary(disabled) Complete
+                        else 
+                            form(action=`/shop/transactions/${transaction._id}/complete`, method="get")
+                                button.btn.btn-outline-success(type='submit') Complete

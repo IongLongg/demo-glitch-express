@@ -15,14 +15,21 @@ module.exports = async (req,res, next) => {
         res.locals.sessionId = req.signedCookies.sessionId
         res.locals.inCart = session.cart.length
     }
+
     if(req.signedCookies.userId){
         const user = await User.findById(req.signedCookies.userId).exec()
         res.locals.mainUser = user
         res.locals.isAdmin = user.isAdmin
     }
+
+    if(req.signedCookies.shoppingId){
+        const shop = await Shop.findById(req.signedCookies.shoppingId).exec()
+        res.locals.shop = shop 
+    }
+
     if(req.signedCookies.shopId){
         const shop = await Shop.findById(req.signedCookies.shopId).exec()
-        res.locals.shop = shop
+        res.locals.shopAdmin = true 
     }
     next()
 }

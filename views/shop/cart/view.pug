@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+    .container.pt-5
+        h1 Cart
+        h4=`Total : ${session.cart.length}`
+        if !session.cart
+            .alert.alert-primary Your cart is empty
+        else
+            - var i=1
+            table.table
+                thead
+                    tr
+                        th(scope='col') 
+                        th(scope='col') Title
+                        th(scope='col') 
+                tbody
+                    each book in session.cart
+                        tr
+                            th(scope='row')=i++
+                            td=book.title
+                            td
+                                a.btn.btn-outline-danger(href=`/shop/cart/${book.id}/delete`) Remove
+        a.float-right.btn.btn-success(href=`/shop/cart/save/${session._id}`) Save
+
+
+    
+                            
+
+

@@ -2,7 +2,7 @@ const Book = require("../models/book.model")
 const Transaction = require("../models/transaction.model")
 const User = require("../models/user.model")
 
-module.exports.index = async  (req, res) => {
+module.exports.index = async (req, res) => {
     let reqId = req.signedCookies.userId || req.signedCookies.sessionId
 
     const transactions = await Transaction.find().exec()

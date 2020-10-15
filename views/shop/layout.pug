@@ -7,7 +7,7 @@ html
     body
         nav.navbar-expand-lg.navbar.navbar-dark.bg-dark
             .container
-                a.navbar-brand(href=`/shop/${shop.id}`)=shop.name
+                a.navbar-brand(href='/') Express App
                 button.navbar-toggler("navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarRes")
                     span.navbar-toggler-icon
                 #navbarRes.collapse.navbar-collapse
@@ -16,7 +16,8 @@ html
                             a.nav-link(href=`/shop/books`) Books
                         li.nav-item
                             a.nav-link(href=`/shop/transactions`) Transactions
-                    a.btn.btn-secondary(href='/shop/auth/logout') Logout
+                    if shopAdmin
+                        a.btn.btn-secondary(href='/shop/auth/logout') Logout
 
     block content
 

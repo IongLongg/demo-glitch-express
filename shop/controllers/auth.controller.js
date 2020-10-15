@@ -21,7 +21,7 @@ module.exports.logout = async (req, res) => {
     res.clearCookie('sessionId')
     res.clearCookie('shopId')
     await Session.findByIdAndDelete(req.signedCookies.sessionId)
-    res.redirect('back')
+    res.redirect('/shop')
 }
 
 module.exports.getSignup = (req, res) => {
