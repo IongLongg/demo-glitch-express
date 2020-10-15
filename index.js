@@ -33,7 +33,13 @@ const errorHandling = require('./middlewares/error.handling')
 const app = express()
 const port = process.env.PORT || 3000
 
-mongoose.connect(process.env.MONGO_URL)
+const uri = process.env.MONGO_URL;
+// Prints "MongoError: bad auth Authentication failed."
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000
+}).catch(err => console.log(err.reason));
 
 app.set('views', './views')
 app.set('view engine', 'pug')
@@ -45,10 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser(process.env.SESSION_SECRET))
 app.use(sessionMiddleware)
 
-// app.get('', (req,res, next) => {
-//     var a
-//     a.foo()
-// })
+
 app.use('',homeRouter);
 app.use('/auth', authRouter)
 app.use('/books', bookRouter)
