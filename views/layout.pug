@@ -21,7 +21,7 @@ html
             li.nav-item
               a.nav-link(href="/shop") Shops
           if mainUser
-            h3.mr-3(style='color:white')=mainUser.name
+            h3.mr-3=mainUser.name
             a.btn.btn-secondary(href='/auth/logout') Logout
           //- if shop
           //-   h3.mr-3(style='color:white')=shop.name
