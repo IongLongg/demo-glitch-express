@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css')
     link(rel='stylesheet', href='/styles/style.css')
   body
-    nav.navbar-expand-lg.navbar.navbar-dark.bg-dark
+    nav.navbar-expand-lg.navbar.navbar-light.bg-light
       .container
         a.navbar-brand(href="/") Express App
         button.navbar-toggler("navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarRes")
@@ -19,7 +19,7 @@ html
             li.nav-item
               a.nav-link(href="/transactions") Transactions
             li.nav-item
-              a.nav-link(href="/shop") Shop
+              a.nav-link(href="/shop") Shops
           if mainUser
             h3.mr-3(style='color:white')=mainUser.name
             a.btn.btn-secondary(href='/auth/logout') Logout
