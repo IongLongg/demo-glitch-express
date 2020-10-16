@@ -33,7 +33,7 @@ const errorHandling = require('./middlewares/error.handling')
 const app = express()
 const port = process.env.PORT || 3000
 
-const uri = process.env.MONGO_URL;
+const uri = process.env.MONGO_URL || "mongodb://localhost/express-demo";
 // Prints "MongoError: bad auth Authentication failed."
 mongoose.connect(uri, {
     useNewUrlParser: true,
