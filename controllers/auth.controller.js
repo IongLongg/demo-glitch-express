@@ -21,11 +21,11 @@ module.exports.logout = async (req,res) => {
     res.clearCookie('userId')
     res.clearCookie('sessionId')
     await Session.findByIdAndDelete(req.signedCookies.sessionId)
-    res.redirect('/login')
+    res.redirect('/auth/login')
 }
 
 module.exports.signup =  (req, res) => {
-    res.render('users/create')
+    res.render('auth/signup')
 }
 module.exports.postSignup = async (req, res) => {
     await cloudinary.uploader.upload(`./${req.file.path}`, (error, result) => {

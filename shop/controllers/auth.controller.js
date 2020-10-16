@@ -39,5 +39,5 @@ module.exports.postSignup = async (req, res) => {
     let hashPassword = bcrypt.hashSync(req.body.password, 10)
     req.body.password = hashPassword
     await Shop.create(req.body)
-    res.redirect('/shop/auth/login')
+    res.redirect('/shop')
 }

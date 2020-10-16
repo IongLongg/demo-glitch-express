@@ -12,8 +12,7 @@ module.exports = async (req,res, next) => {
         creation.save()
     } else {
         const session = await Session.findById(req.signedCookies.sessionId).exec()
-        res.locals.sessionId = req.signedCookies.sessionId
-        res.locals.inCart = session.cart.length
+        res.locals.session = session
     }
 
     if(req.signedCookies.userId){
