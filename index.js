@@ -8,7 +8,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
-const cors = require('cors')
 
 const homeRouter = require('./routes/home.router')
 const authRouter = require('./routes/auth.router')
@@ -46,8 +45,6 @@ mongoose.connect(uri, {
 
 app.set('views', './views')
 app.set('view engine', 'pug')
-
-app.use(cors())
 
 app.use(express.static('public'))
 

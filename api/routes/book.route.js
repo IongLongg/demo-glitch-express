@@ -1,13 +1,14 @@
 const express = require('express')
+const cors = require('cors')
 
 const controller = require('../controllers/book.controller')
 const schema = require('../validators/book.schema')
 
 const router  = express.Router()
 
-router.get('/', controller.index)
+router.get('/', cors(), controller.index)
 
-router.get('/:id', controller.getById)
+router.get('/:id', cors(), controller.getById)
 
 router.post('/create', schema.createBookSchema ,controller.create)
 
